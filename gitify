@@ -1,0 +1,22 @@
+#Usage: gitify file-in-Audio week-directory-for-.link-file class
+if [ $# -lt 3 ] ; then echo "Usage: $0 class week day"; exit; fi
+class=$1
+week=$2
+oweek=$(printf "%02d" $2)
+day=$3
+AudioDir="/Users/sahill/Work/Teaching/$class/www/Audio"
+AudioFile="$class$day$week.mp3"
+WeekFile="/Users/sahill/Work/Teaching/$class/www/Week/$oweek/$day/Audio.link"
+echo "Changing directory to $AudioDir"
+cd $AudioDir
+echo "===Adding file $AudioFile"
+git add $AudioFile
+echo "===Committing"
+git commit -m "$AudioFile"
+echo "===Pushing"
+git push
+echo "===Creating Link"
+echo "https://github.com/sahi1l/$class/raw/master/$AudioFile" > $WeekFile
+echo "===Done"
+#NOTE: I could use exec instead, it's blocking
+
